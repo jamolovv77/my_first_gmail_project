@@ -1,0 +1,431 @@
+
+/* =====================================
+   1. GLOBAL DESIGN
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background:
+        radial-gradient(circle at 15% 20%, #312e81 0%, transparent 35%),
+        radial-gradient(circle at 85% 80%, #1e40af 0%, transparent 35%),
+        linear-gradient(135deg, #020617, #0f172a, #111827);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    overflow-x: hidden;
+    animation: backgroundMove 10s ease-in-out infinite alternate;
+}
+
+/* =====================================
+   2. ANIMATED BACKGROUND
+===================================== */
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: -1;
+}
+
+body::before {
+    background: #2563eb;
+    top: 5%;
+    left: -100px;
+    animation: floatOne 8s infinite alternate ease-in-out;
+}
+
+body::after {
+    background: #9333ea;
+    bottom: 0;
+    right: -100px;
+    animation: floatTwo 9s infinite alternate ease-in-out;
+}
+
+/* =====================================
+   3. FORMS
+===================================== */
+
+form {
+    width: 100%;
+    max-width: 440px;
+    padding: 42px 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 25px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+
+    animation: cardEnter 0.9s cubic-bezier(.2,.8,.2,1);
+    transition: 0.4s ease;
+}
+
+form:hover {
+    border-color: rgba(96, 165, 250, 0.5);
+    box-shadow:
+        0 30px 85px rgba(37, 99, 235, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+form::before {
+    content: "WELCOME";
+    display: block;
+    text-align: center;
+    font-size: 29px;
+    font-weight: 900;
+    letter-spacing: 5px;
+
+    background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #c084fc,
+        #60a5fa
+    );
+
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation: gradientText 4s linear infinite;
+    margin-bottom: 8px;
+}
+
+/* =====================================
+   4. INPUTS
+===================================== */
+
+input {
+    width: 100%;
+    height: 57px;
+    padding: 0 19px;
+
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 14px;
+
+    outline: none;
+    color: white;
+    font-size: 15px;
+
+    transition: all 0.35s ease;
+}
+
+input::placeholder {
+    color: #94a3b8;
+    transition: 0.3s;
+}
+
+input:hover {
+    border-color: #64748b;
+    background: rgba(30, 41, 59, 0.8);
+}
+
+input:focus {
+    border-color: #60a5fa;
+    background: rgba(30, 58, 138, 0.2);
+
+    box-shadow:
+        0 0 0 4px rgba(59, 130, 246, 0.12),
+        0 0 25px rgba(59, 130, 246, 0.15);
+
+    transform: translateY(-3px);
+}
+
+input:focus::placeholder {
+    color: #bfdbfe;
+}
+
+/* =====================================
+   5. BUTTON
+===================================== */
+
+button {
+    position: relative;
+    overflow: hidden;
+
+    width: 100%;
+    height: 57px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(120deg, #2563eb, #7c3aed, #2563eb);
+    background-size: 200%;
+
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+
+    transition: all 0.35s ease;
+}
+
+button:hover {
+    background-position: right;
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(37, 99, 235, 0.4),
+        0 0 20px rgba(124, 58, 237, 0.2);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+
+    transform: skewX(-25deg);
+    transition: 0.7s;
+}
+
+button:hover::before {
+    left: 150%;
+}
+
+/* =====================================
+   6. ERROR MESSAGE
+===================================== */
+
+p {
+    color: #fca5a5;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+
+    padding: 12px;
+    border-radius: 10px;
+
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+
+    animation: errorShake 0.5s ease;
+}
+
+/* =====================================
+   7. HOME PAGE
+===================================== */
+
+body > div {
+    width: 100%;
+    max-width: 750px;
+
+    padding: 65px 35px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 28px;
+
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+
+    animation: cardEnter 1s ease;
+}
+
+h1 {
+    font-size: clamp(23px, 4vw, 36px);
+    font-weight: 900;
+    line-height: 1.5;
+
+    background: linear-gradient(90deg, #93c5fd, #c4b5fd, #93c5fd);
+    background-size: 200%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation: gradientText 5s linear infinite;
+}
+
+/* =====================================
+   8. PROFILE PAGE
+===================================== */
+
+body:has(h1 + h1) {
+    flex-direction: column;
+    gap: 22px;
+}
+
+body:has(h1 + h1) h1 {
+    width: 100%;
+    max-width: 550px;
+
+    padding: 28px;
+
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+
+    font-size: 23px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+
+    transition: 0.4s ease;
+}
+
+body:has(h1 + h1) h1:hover {
+    transform: translateY(-7px) scale(1.02);
+    border-color: #60a5fa;
+
+    box-shadow: 0 20px 45px rgba(37, 99, 235, 0.2);
+}
+
+/* =====================================
+   9. ANIMATIONS
+===================================== */
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(45px) scale(0.94);
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes floatOne {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(120px, 100px);
+    }
+}
+
+@keyframes floatTwo {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-120px, -100px);
+    }
+}
+
+@keyframes gradientText {
+    to {
+        background-position: 200% center;
+    }
+}
+
+@keyframes backgroundMove {
+    from {
+        background-position: 0% 0%;
+    }
+
+    to {
+        background-position: 100% 100%;
+    }
+}
+
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* =====================================
+   10. RESPONSIVE
+===================================== */
+
+@media (max-width: 600px) {
+    body {
+        padding: 17px;
+    }
+
+    form {
+        max-width: 100%;
+        padding: 32px 22px;
+        gap: 18px;
+        border-radius: 21px;
+    }
+
+    form::before {
+        font-size: 25px;
+    }
+
+    input,
+    button {
+        height: 53px;
+    }
+
+    body > div {
+        padding: 40px 20px;
+    }
+
+    body:has(h1 + h1) h1 {
+        padding: 23px 15px;
+        font-size: 19px;
+    }
+}
+
+/* =====================================
+   11. REDUCE MOTION
+===================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
